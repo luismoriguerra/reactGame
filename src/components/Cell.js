@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Cell = ({ id, gameState, activeCells, correctGuesses, wrongGuesses, recordGuess, showActiveCells }) =>{
+const Cell = ({ id, gameState, activeCells, correctGuesses,
+  wrongGuesses, recordGuess, showActiveCells }) =>{
+
   const active = function () {
     return activeCells.indexOf(id) >= 0;
   }
@@ -23,13 +25,12 @@ const Cell = ({ id, gameState, activeCells, correctGuesses, wrongGuesses, record
       })
     }
   }
-  
+
   let className = " cell ";
 
   if (showActiveCells && active()) {
     className += " active ";
   }
-
 
   className += " guess-" + guessState();
 

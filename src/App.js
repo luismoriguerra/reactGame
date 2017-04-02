@@ -6,11 +6,19 @@ import Game from './components/Game'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {gameId: 1};
+    this.state = {
+      gameId: 1,
+      columns: 5,
+      rows: 5
+    };
   }
 
   createNewGame() {
-    this.setState({gameId: ++this.state.gameId})
+    this.setState({
+      gameId: ++this.state.gameId,
+      columns: ++this.state.columns,
+      rows: ++this.state.rows,
+    })
   }
 
 
@@ -19,8 +27,8 @@ class App extends Component {
       <div className="App">
         <Game key={this.state.gameId}
               createNewGame={this.createNewGame.bind(this)}
-              rows={5}
-              columns={5}
+              rows={this.state.rows}
+              columns={this.state.columns}
               activeCellsCount={6} />
       </div>
     );

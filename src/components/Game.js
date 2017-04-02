@@ -4,6 +4,7 @@ import Cell from './Cell';
 import Footer from './Footer';
 import _ from 'lodash';
 import './styles.css'
+import Score from './Score'
 
 class Game extends React.Component {
 
@@ -28,12 +29,12 @@ class Game extends React.Component {
     this.state = {
       gameState: "ready",
       wrongGuesses: [],
-      correctGuesses: []
+      correctGuesses: [],
+      remainingTime: this.props.timeoutSeconds
     }
   }
 
   componentDidMount() {
-
     this.memorizeTimerId = setTimeout(() => {
       this.setState({gameState: "memorize"}, () => {
         this.recallTimerId = setTimeout(
@@ -56,6 +57,7 @@ class Game extends React.Component {
         if( --this.secondsRemaining === 0) {
           this.setState({gameState: this.finishGame('lost')})
         }
+        this.setState({remainingTime: this.secondsRemaining});
       }, 1000)
     })
   }
@@ -84,7 +86,6 @@ class Game extends React.Component {
 
   }
 
-
   render() {
 
     let showActiveCells = ["memorize", 'lost'].indexOf(this.state.gameState) >= 0;
@@ -106,15 +107,18 @@ class Game extends React.Component {
           </Row>
         ))}
 
-      <Footer {...this.state}
-              playAgain={this.props.createNewGame}
-              activeCellsCount={this.props.activeCellsCount} />
+        <Footer {...this.state}
+                playAgain={this.props.createNewGame}
+                activeCellsCount={this.props.activeCellsCount} />
 
+        {this.state.gameState === 'won' && <Score {...this.state} />}
+        <div>
+          Remaining time : {this.state.remainingTime}
+        </div>
       </div>
     );
   }
 }
-
 
 Game.propTypes = {
   rows: React.PropTypes.number,
