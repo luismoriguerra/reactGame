@@ -83,7 +83,6 @@ class Game extends React.Component {
     }
 
     this.setState({correctGuesses, wrongGuesses, gameState});
-
   }
 
   render() {
